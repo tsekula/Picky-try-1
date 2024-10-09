@@ -1,7 +1,7 @@
 # Picky: File Structure and Dependencies
 
 ## Project Structure
-
+```
 /
 ├── client/ # Frontend React application
 │ ├── public/
@@ -25,3 +25,4 @@
 │ └── .env
 ├── docs/ # Project documentation
 └── README.md
+```
