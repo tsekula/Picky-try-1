@@ -12,63 +12,58 @@ The Data Storage Service manages the storage and retrieval of user data, image d
 - Receives data from User Authentication, Image Upload, Image Analysis, and Facial Recognition Services
 - Provides data to the Search Service and Gallery View Component
 
-## Decisions to be made
+## Decisions made
 
 1. **Database Type:**
-   - Relational (e.g., PostgreSQL) vs. NoSQL (e.g., MongoDB)
-   - Consider a hybrid approach with a relational DB for structured data and a document store for flexible metadata
+   - Relational: PostgreSQL via Supabase
+   - Leverages pgvector for vector storage and similarity search
 
 2. **Vector Storage Solution:**
-   - Choose a vector database (e.g., Pinecone, Milvus) or vector extension for your primary database (e.g., pgvector for PostgreSQL)
+   - pgvector extension provided by Supabase for PostgreSQL
 
 3. **File Storage:**
-   - Local file system vs. Cloud object storage (e.g., AWS S3, Google Cloud Storage)
-   - Consider factors like scalability, cost, and access speed
+   - Supabase Storage (object storage similar to S3)
 
 4. **Caching Strategy:**
-   - Decide on a caching solution (e.g., Redis) for frequently accessed data
+   - Utilize Supabase's built-in caching mechanisms
+   - Consider adding Redis for additional caching if needed
 
 5. **Data Partitioning:**
-   - Determine if/how to partition data (e.g., by user, date, or content type)
+   - Utilize PostgreSQL's partitioning features for large tables
 
 6. **Backup and Redundancy:**
-   - Choose backup frequency and method
-   - Decide on redundancy level (e.g., multi-region replication)
+   - Automatic backups provided by Supabase
+   - Point-in-time recovery available
 
 7. **Access Control:**
-   - Define the authentication and authorization mechanism for data access
-   - Implement role-based access control (RBAC) for different user types
+   - Implement Row Level Security (RLS) policies in Supabase
+   - Utilize Supabase Auth for user authentication
 
 ## Setup and Initialization
 
-1. **Database Setup:**
-   - Install and configure chosen database system(s)
-   - Create necessary databases, tables, and indexes
-   - Set up user accounts and access permissions
+1. **Supabase Project Setup:**
+   - Create a new Supabase project
+   - Configure project settings and obtain API keys
 
-2. **Schema Design:**
-   - Design and implement database schema for:
-     - User accounts and authentication data
-     - Image metadata (filename, size, dimensions, upload date, etc.)
-     - Analysis results (objects, text, people, landmarks, scene labels)
-     - Tagging and categorization system
+2. **Database Schema Design:**
+   - Use Supabase's SQL editor or migration tools to create:
+     - User accounts table (leveraging Supabase Auth)
+     - Images table for metadata
+     - Analysis results table
+     - Tags and categories tables
 
-3. **Vector Storage Integration:**
-   - Set up chosen vector storage solution
-   - Create necessary indexes for efficient similarity search
+3. **Vector Storage Setup:**
+   - Enable pgvector extension in Supabase
+   - Create vector columns for similarity search
 
-4. **File Storage System:**
-   - Configure chosen file storage system
-   - Set up access controls and security measures
-   - Implement user-specific storage buckets or folders
+4. **File Storage Configuration:**
+   - Set up Supabase Storage buckets for image files
+   - Configure access policies for secure file management
 
 5. **API Development:**
-   - Create RESTful or GraphQL API endpoints for:
-     - User account management
-     - Storing new image data and metadata
-     - Retrieving image data and metadata
-     - Updating existing records
-     - Performing vector similarity searches
+   - Utilize auto-generated APIs for basic CRUD operations
+   - Create custom Postgres functions for complex queries
+   - Implement Edge Functions for additional backend logic
 
 6. **Data Migration (if applicable):**
    - Develop scripts to migrate existing data to the new system

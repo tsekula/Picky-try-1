@@ -1,0 +1,12 @@
+{
+  "devDependencies": {
+    "concurrently": "^9.0.1",
+    "cross-env": "^7.0.3",
+    "nodemon": "^3.1.7"
+  },
+  "scripts": {
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:server": "nodemon --inspect src/server/index.js",
+    "dev:client": "cross-env NEXT_PUBLIC_DEBUG=true next dev"
+  }
+}

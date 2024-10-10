@@ -6,10 +6,46 @@
     "configurations": [
         {
             "type": "node",
-            "request": "attach",
-            "name": "Attach to Next.js",
-            "skipFiles": ["<node_internals>/**"],
-            "port": 9229
+            "request": "launch",
+            "name": "Debug Node.js App",
+            "program": "${workspaceFolder}/server/src/app.js",
+            "cwd": "${workspaceFolder}/server",
+            "autoAttachChildProcesses": true,
+            "skipFiles": ["<node_internals>/**"]
+        },
+        {
+            "name": "Next.js: debug server-side",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "npm exec next dev",
+            "cwd": "${workspaceFolder}/client"
+          },
+          {
+            "name": "Next.js: debug client-side",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://localhost:3000",
+            "cwd": "${workspaceFolder}/client"
+
+          },
+          {
+            "name": "Next.js: debug full stack",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "npm exec next dev",
+            "cwd": "${workspaceFolder}/client",
+            "serverReadyAction": {
+              "pattern": "- Local:.+(https?://.+)",
+              "uriFormat": "%s",
+              "action": "debugWithChrome"
+            }
+          }
+    ],
+    "compounds": [
+        {
+            "name": "Debug Node.js and Next.js",
+            "configurations": ["Debug Node.js App", "Launch Next.js App", "Attach to Next.js App"],
+            "stopAll": true
         }
     ]
 }

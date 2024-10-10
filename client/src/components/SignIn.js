@@ -4,14 +4,14 @@ import { useAuth } from '../contexts/AuthContext';
 export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { signIn } = useAuth();
+  const { signIn, setUser } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { error } = await signIn({ email, password });
+      const { error, data } = await signIn({ email, password });
       if (error) throw error;
-      // Redirect or update UI upon successful sign in
+      setUser({ ...data.user, token: data.session.access_token });
     } catch (error) {
       alert(error.message);
     }

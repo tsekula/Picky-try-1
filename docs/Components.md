@@ -47,7 +47,9 @@
 - **Interactions**: 
   - Receives data from User Authentication, Image Upload, Image Analysis, and Facial Recognition Services
   - Provides data to the Search Service and Gallery View Component
-- **Detailed Documentation**: [Data Storage Service](./components/DataStorageService.md)
+- **Detailed Documentation**: 
+  - [Data Storage Service](./components/DataStorageService.md)
+  - [Data Model](./components/DataModel.md)
 
 ### 6. Search Service
 - **Functionality**: Processes natural language queries and returns relevant image results within a user's private gallery.

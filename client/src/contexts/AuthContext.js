@@ -11,15 +11,26 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setUser(session?.user ?? null);
+      async (event, session) => {
+        if (session) {
+          const { user, access_token } = session;
+          setUser(user);
+          localStorage.setItem('token', access_token);
+        } else {
+          setUser(null);
+          localStorage.removeItem('token');
+        }
         setLoading(false);
       }
     );
 
     // Initial session check
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
+      if (session) {
+        const { user, access_token } = session;
+        setUser(user);
+        localStorage.setItem('token', access_token);
+      }
       setLoading(false);
     });
 
@@ -31,8 +42,11 @@ export function AuthProvider({ children }) {
   const value = {
     signUp: (data) => supabase.auth.signUp(data),
     signIn: (data) => supabase.auth.signInWithPassword(data),
-    signOut: () => supabase.auth.signOut(),
+    signOut: () => {
+      return supabase.auth.signOut();
+    },
     user,
+    setUser,
   };
 
   return (

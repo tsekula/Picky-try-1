@@ -2,13 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "dev:debug": "set NODE_OPTIONS=--inspect && next dev"
-  },
+  
   "dependencies": {
     "@supabase/supabase-js": "^2.45.4",
     "axios": "^1.7.7",
